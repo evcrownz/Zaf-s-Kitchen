@@ -522,33 +522,50 @@ if (isset($_GET['action']) && $_GET['action'] === 'get_booking_stats') {
     color: white !important;
 }
 
-        .price-calculator {
-            background: linear-gradient(135deg, #E75925, #d14d1f);
-            border-radius: 12px;
-            color: white;
-            box-shadow: 0 8px 32px rgba(231, 89, 37, 0.3);
-        }
-        
-        .price-breakdown {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .price-item {
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .price-item:last-child {
-            border-bottom: none;
-            font-weight: bold;
-            font-size: 1.2em;
-            margin-top: 8px;
-            padding-top: 16px;
-            border-top: 2px solid rgba(255, 255, 255, 0.3);
-        }
+#price-summary {
+    background: white !important;
+    border: none !important;
+    color: #E75925 !important;
+    box-shadow: none !important;
+}
+
+#price-summary * {
+    color: #E75925 !important;
+}
+
+#price-summary-step2 {
+    background: white !important;
+    border: none !important;
+    color: #E75925 !important;
+    box-shadow: none !important;
+}
+
+#price-summary-step2 * {
+    color: #E75925 !important;
+}
+
+#price-summary-step3 {
+    background: white !important;
+    border: none !important;
+    color: #E75925 !important;
+    box-shadow: none !important;
+}
+
+#price-summary-step3 * {
+    color: #E75925 !important;
+}
+
+/* Override any existing price calculator styles */
+.price-calculator {
+    background: white !important;
+    color: #E75925 !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.price-calculator * {
+    color: #E75925 !important;
+}
         
         /* Enhanced Booking Card Styles */
         .booking-card-enhanced {
@@ -1143,416 +1160,465 @@ if (isset($_GET['action']) && $_GET['action'] === 'get_booking_stats') {
         </div>
     </div>
 
-    <div class="grid lg:grid-cols-3 gap-6">
-        <!-- Booking Form -->
-        <div class="lg:col-span-2">
-            <form id="booking-form" method="POST">
-                <input type="hidden" name="action" value="book_event">
-                <input type="hidden" id="total_price" name="total_price" value="0">
-                
-                <!-- Step 1: Basic Information -->
-                <div id="booking-step1" class="form-step active bg-white p-6 rounded-lg shadow-lg border-2 border-gray-300">
-                    <h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
-                        <i class="fas fa-user-circle text-[#E75925]"></i>
-                        Basic Information
-                    </h3>
-                    <div class="space-y-4">
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block font-semibold mb-1 text-gray-700">
-                                    <i class="fas fa-user mr-2 text-[#E75925]"></i>
-                                    Your Full Name *
-                                </label>
-                                <input id="fullname" name="full_name" type="text" 
-                                    class="form-input w-full border-2 border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#E75925] focus:border-[#E75925] text-black" 
-                                    placeholder="Enter your full name" required>
-                            </div>
-                            <div>
-                                <label class="block font-semibold mb-1 text-gray-700">
-                                    <i class="fas fa-phone mr-2 text-[#E75925]"></i>
-                                    Contact Number *
-                                </label>
-                                <input id="contact" name="contact_number" type="tel" 
-                                    class="form-input w-full border-2 border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#E75925] focus:border-[#E75925] text-black" 
-                                    placeholder="e.g. +63 912 345 6789" required>
-                            </div>
-                        </div>
-                        
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block font-semibold mb-1 text-gray-700">
-                                    <i class="fas fa-star mr-2 text-[#E75925]"></i>
-                                    Celebrant's Name *
-                                </label>
-                                <input id="celebrant-name" name="celebrant_name" type="text" 
-                                    class="form-input w-full border-2 border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#E75925] focus:border-[#E75925] text-black" 
-                                    placeholder="Name of the person being celebrated" required>
-                                <p class="text-xs text-gray-500 mt-1">For corporate events, you can put company name</p>
-                            </div>
-                            <div>
-                                <label class="block font-semibold mb-1 text-gray-700">
-                                    <i class="fas fa-users mr-2 text-[#E75925]"></i>
-                                    Number of Guests *
-                                </label>
-                                <input id="guest-count" name="guest_count" type="number" min="1" max="500"
-                                    class="form-input w-full border-2 border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#E75925] focus:border-[#E75925] text-black" 
-                                    placeholder="Expected number of guests" required>
-                            </div>
-                        </div>
-                        
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block font-semibold mb-1 text-gray-700">
-                                    <i class="fas fa-utensils mr-2 text-[#E75925]"></i>
-                                    Food Package *
-                                </label>
-                                <select id="package" name="food_package" 
-                                    class="form-input w-full border-2 border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#E75925] focus:border-[#E75925] text-black" required>
-                                    <option value="">Select a package</option>
-                                    <option value="budget" data-price="200">Budget Package - ₱200/person</option>
-                                    <option value="standard" data-price="350">Standard Package - ₱350/person</option>
-                                    <option value="premium" data-price="500">Premium Package - ₱500/person</option>
-                                    <option value="deluxe" data-price="750">Deluxe Package - ₱750/person</option>
-                                    <option value="luxury" data-price="1000">Luxury Package - ₱1000/person</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block font-semibold mb-1 text-gray-700">
-                                    <i class="fas fa-calendar-day mr-2 text-[#E75925]"></i>
-                                    Type of Event *
-                                </label>
-                                <select id="eventtype" name="event_type" 
-                                    class="form-input w-full border-2 border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#E75925] focus:border-[#E75925] text-black" required>
-                                    <option value="">Select event type</option>
-                                    <option value="birthday">Birthday Party</option>
-                                    <option value="wedding">Wedding Reception</option>
-                                    <option value="corporate">Corporate Event</option>
-                                    <option value="graduation">Graduation Party</option>
-                                    <option value="anniversary">Anniversary</option>
-                                    <option value="debut">Debut/18th Birthday</option>
-                                    <option value="baptismal">Baptismal</option>
-                                    <option value="funeral">Funeral Service</option>
-                                    <option value="others">Others</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <!-- Birthday Age Field -->
-                        <div id="age-field" class="hidden">
+    <!-- Booking Form -->
+    <div class="w-full">
+        <form id="booking-form" method="POST">
+            <input type="hidden" name="action" value="book_event">
+            <input type="hidden" id="total_price" name="total_price" value="0">
+            
+            <!-- Step 1: Basic Information -->
+            <div id="booking-step1" class="form-step active bg-white p-6 rounded-lg shadow-lg border-2 border-gray-300">
+                <h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                    <i class="fas fa-user-circle text-[#E75925]"></i>
+                    Basic Information
+                </h3>
+                <div class="space-y-4">
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
                             <label class="block font-semibold mb-1 text-gray-700">
-                                <i class="fas fa-birthday-cake mr-2 text-[#E75925]"></i>
-                                Celebrant's Age *
+                                <i class="fas fa-user mr-2 text-[#E75925]"></i>
+                                Your Full Name *
                             </label>
-                            <input id="celebrant-age" name="celebrant_age" type="number" min="1" max="150"
-                                class="form-input w-full md:w-32 border-2 border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#E75925] focus:border-[#E75925] text-black" 
-                                placeholder="Age">
+                            <input id="fullname" name="full_name" type="text" 
+                                class="form-input w-full border-2 border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#E75925] focus:border-[#E75925] text-black" 
+                                placeholder="Enter your full name" required>
                         </div>
-                        
-                        <div class="flex justify-end">
-                            <button type="button" id="next-step1" 
-                                class="text-white px-8 py-3 rounded-lg shadow-md hover:opacity-90 transition-all transform hover:scale-105 font-semibold" 
-                                style="background-color:#E75925;">
-                                Next Step <i class="fas fa-arrow-right ml-2"></i>
-                            </button>
+                        <div>
+                            <label class="block font-semibold mb-1 text-gray-700">
+                                <i class="fas fa-phone mr-2 text-[#E75925]"></i>
+                                Contact Number *
+                            </label>
+                            <input id="contact" name="contact_number" type="tel" 
+                                class="form-input w-full border-2 border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#E75925] focus:border-[#E75925] text-black" 
+                                placeholder="e.g. +63 912 345 6789" required>
                         </div>
                     </div>
-                </div>
-
-                <!-- Step 2: Event Details -->
-                <div id="booking-step2" class="form-step bg-white p-6 rounded-lg shadow-lg border-2 border-gray-300 hidden">
-                    <h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
-                        <i class="fas fa-calendar-alt text-[#E75925]"></i>
-                        Event Schedule & Details
-                    </h3>
-                    <div class="space-y-6">
-                        <div class="grid md:grid-cols-3 gap-4">
-                            <div>
-                                <label class="block font-semibold mb-1 text-gray-700">
-                                    <i class="fas fa-calendar mr-2 text-[#E75925]"></i>
-                                    Event Date *
-                                </label>
-                                <input id="event-date" name="event_date" type="date" 
-                                    class="form-input w-full border-2 border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#E75925] focus:border-[#E75925] text-black" required>
-                                <p class="text-xs text-gray-500 mt-1">Must be at least 3 days from today</p>
-                            </div>
-                            <div>
-                                <label class="block font-semibold mb-1 text-gray-700">
-                                    <i class="fas fa-clock mr-2 text-[#E75925]"></i>
-                                    Start Time *
-                                </label>
-                                <input id="start-time" name="start_time" type="time" 
-                                    class="form-input w-full border-2 border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#E75925] focus:border-[#E75925] text-black" required>
-                            </div>
-                            <div>
-                                <label class="block font-semibold mb-1 text-gray-700">
-                                    <i class="fas fa-clock mr-2 text-[#E75925]"></i>
-                                    End Time *
-                                </label>
-                                <input id="end-time" name="end_time" type="time" 
-                                    class="form-input w-full border-2 border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#E75925] focus:border-[#E75925] text-black" required>
-                                <p class="text-xs text-gray-500 mt-1">Duration: 4-8 hours</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Location Input -->
+                    
+                    <div class="grid md:grid-cols-2 gap-4">
                         <div>
-                            <label for="location" class="block font-semibold mb-1 text-gray-700">
-                                <i class="fas fa-map-marker-alt mr-2 text-[#E75925]"></i>
-                                Event Location *
+                            <label class="block font-semibold mb-1 text-gray-700">
+                                <i class="fas fa-star mr-2 text-[#E75925]"></i>
+                                Celebrant's Name *
                             </label>
-                            <input type="text" id="location" name="location" required
-                                placeholder="Enter full event address (e.g., 123 Main St, City)"
-                                class="form-input w-full border-2 border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#E75925] focus:border-[#E75925] text-black" />
-                            <p class="text-xs text-gray-500 mt-1">Provide the exact address of the event location.</p>
+                            <input id="celebrant-name" name="celebrant_name" type="text" 
+                                class="form-input w-full border-2 border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#E75925] focus:border-[#E75925] text-black" 
+                                placeholder="Name of the person being celebrated" required>
+                            <p class="text-xs text-gray-500 mt-1">For corporate events, you can put company name</p>
                         </div>
-                        
-                        <!-- Time Conflict Warning -->
-                        <div id="time-conflict-warning" class="hidden bg-red-50 border border-red-200 rounded-lg p-4">
-                            <div class="flex items-center">
-                                <i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>
-                                <span class="text-red-700 font-semibold">Time Conflict Detected</span>
-                            </div>
-                            <p class="text-red-600 mt-1 text-sm" id="conflict-details"></p>
-                        </div>
-
-                        <!-- Event Summary Preview -->
-                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                            <h4 class="font-semibold text-blue-800 mb-2 flex items-center gap-2">
-                                <i class="fas fa-eye"></i>
-                                Event Preview
-                            </h4>
-                            <div id="event-preview" class="text-sm text-blue-700">
-                                <p>Fill in the details above to see your event preview</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex justify-between">
-                            <button type="button" id="back-step2" 
-                                class="bg-gray-300 text-gray-700 px-6 py-3 rounded-lg shadow-md hover:bg-gray-400 transition-colors font-semibold">
-                                <i class="fas fa-arrow-left mr-2"></i>Back
-                            </button>
-                            <button type="button" id="next-step2" 
-                                class="text-white px-8 py-3 rounded-lg shadow-md hover:opacity-90 transition-all transform hover:scale-105 font-semibold" 
-                                style="background-color:#E75925;">
-                                Next Step <i class="fas fa-arrow-right ml-2"></i>
-                            </button>
+                        <div>
+                            <label class="block font-semibold mb-1 text-gray-700">
+                                <i class="fas fa-users mr-2 text-[#E75925]"></i>
+                                Number of Guests *
+                            </label>
+                            <input id="guest-count" name="guest_count" type="number" min="1" max="500"
+                                class="form-input w-full border-2 border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#E75925] focus:border-[#E75925] text-black" 
+                                placeholder="Expected number of guests" required>
                         </div>
                     </div>
-                </div>
-
-                <!-- Step 3: Theme & Menu Selection -->
-                <div id="booking-step3" class="form-step bg-white p-6 rounded-lg shadow-lg border-2 border-gray-300 hidden">
-                    <h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
-                        <i class="fas fa-palette text-[#E75925]"></i>
-                        Theme & Menu Customization
-                    </h3>
-                    <div class="space-y-6">
-                        <!-- Theme Selection -->
+                    
+                    <div class="grid md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block font-semibold mb-3 text-gray-700">
-                                <i class="fas fa-paint-brush mr-2 text-[#E75925]"></i>
-                                Choose Your Event Theme
-                            </label>
-                            <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-3">
-                                <button type="button" class="theme-btn p-4 border-2 border-gray-300 rounded-lg hover:border-[#E75925] focus:border-[#E75925] transition-all" data-theme="elegant">
-                                    <i class="fas fa-crown text-3xl mb-2" style="color:#E75925;"></i>
-                                    <div class="font-semibold text-sm">Elegant</div>
-                                    <div class="text-xs text-gray-500">Classic & Sophisticated</div>
-                                    <input type="radio" name="event_theme" value="elegant" class="hidden">
-                                </button>
-                                <button type="button" class="theme-btn p-4 border-2 border-gray-300 rounded-lg hover:border-[#E75925] focus:border-[#E75925] transition-all" data-theme="rustic">
-                                    <i class="fas fa-leaf text-3xl mb-2" style="color:#E75925;"></i>
-                                    <div class="font-semibold text-sm">Rustic</div>
-                                    <div class="text-xs text-gray-500">Natural & Cozy</div>
-                                    <input type="radio" name="event_theme" value="rustic" class="hidden">
-                                </button>
-                                <button type="button" class="theme-btn p-4 border-2 border-gray-300 rounded-lg hover:border-[#E75925] focus:border-[#E75925] transition-all" data-theme="modern">
-                                    <i class="fas fa-star text-3xl mb-2" style="color:#E75925;"></i>
-                                    <div class="font-semibold text-sm">Modern</div>
-                                    <div class="text-xs text-gray-500">Clean & Minimalist</div>
-                                    <input type="radio" name="event_theme" value="modern" class="hidden">
-                                </button>
-                                <button type="button" class="theme-btn p-4 border-2 border-gray-300 rounded-lg hover:border-[#E75925] focus:border-[#E75925] transition-all" data-theme="tropical">
-                                    <i class="fas fa-umbrella-beach text-3xl mb-2" style="color:#E75925;"></i>
-                                    <div class="font-semibold text-sm">Tropical</div>
-                                    <div class="text-xs text-gray-500">Bright & Colorful</div>
-                                    <input type="radio" name="event_theme" value="tropical" class="hidden">
-                                </button>
-                                <button type="button" class="theme-btn p-4 border-2 border-gray-300 rounded-lg hover:border-[#E75925] focus:border-[#E75925] transition-all" data-theme="vintage">
-                                    <i class="fas fa-camera-retro text-3xl mb-2" style="color:#E75925;"></i>
-                                    <div class="font-semibold text-sm">Vintage</div>
-                                    <div class="text-xs text-gray-500">Retro & Classic</div>
-                                    <input type="radio" name="event_theme" value="vintage" class="hidden">
-                                </button>
-                                <button type="button" class="theme-btn p-4 border-2 border-gray-300 rounded-lg hover:border-[#E75925] focus:border-[#E75925] transition-all" data-theme="custom">
-                                    <i class="fas fa-pencil-alt text-3xl mb-2" style="color:#E75925;"></i>
-                                    <div class="font-semibold text-sm">Custom</div>
-                                    <div class="text-xs text-gray-500">Your Own Style</div>
-                                    <input type="radio" name="event_theme" value="custom" class="hidden">
-                                </button>
-                            </div>
-                            
-                            <input id="custom-theme" name="custom_theme" type="text" 
-                                class="w-full border-2 border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#E75925] focus:border-[#E75925] text-black hidden mb-3" 
-                                placeholder="Describe your custom theme">
-                        </div>
-
-                        <!-- Theme Suggestions -->
-                        <div>
-                            <label class="block font-semibold mb-2 text-gray-700">
-                                <i class="fas fa-lightbulb mr-2 text-[#E75925]"></i>
-                                Additional Theme Suggestions or Special Requests
-                            </label>
-                            <textarea id="theme-suggestions" name="theme_suggestions" rows="3"
-                                class="form-input w-full border-2 border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#E75925] focus:border-[#E75925] text-black"
-                                placeholder="Tell us about any specific decorations, colors, or special touches..."></textarea>
-                        </div>
-
-                        <!-- Menu Selection with Pricing -->
-                        <div>
-                            <label class="block font-semibold mb-3 text-gray-700">
+                            <label class="block font-semibold mb-1 text-gray-700">
                                 <i class="fas fa-utensils mr-2 text-[#E75925]"></i>
-                                Additional Menu Items (Optional)
+                                Food Package *
                             </label>
-                            <div class="border-2 border-gray-300 rounded-lg p-4">
-                                <p class="text-sm text-gray-600 mb-4">Add extra items to your package for additional cost:</p>
-                                <div class="grid md:grid-cols-3 gap-6 text-sm">
-                                    <div>
-                                        <div class="font-semibold text-[#E75925] mb-3 text-base border-b pb-2">Main Dishes</div>
-                                        <div class="space-y-2">
-                                            <label class="flex items-center hover:bg-gray-50 p-2 rounded transition-colors">
-                                                <input type="checkbox" name="menu_main[]" value="lechon_kawali" data-price="50" class="mr-3 text-[#E75925] w-4 h-4">
-                                                <span class="flex-1">Lechon Kawali</span>
-                                                <span class="text-[#E75925] font-medium">+₱50</span>
-                                            </label>
-                                            <label class="flex items-center hover:bg-gray-50 p-2 rounded transition-colors">
-                                                <input type="checkbox" name="menu_main[]" value="chicken_adobo" data-price="30" class="mr-3 text-[#E75925] w-4 h-4">
-                                                <span class="flex-1">Chicken Adobo</span>
-                                                <span class="text-[#E75925] font-medium">+₱30</span>
-                                            </label>
-                                            <label class="flex items-center hover:bg-gray-50 p-2 rounded transition-colors">
-                                                <input type="checkbox" name="menu_main[]" value="beef_caldereta" data-price="75" class="mr-3 text-[#E75925] w-4 h-4">
-                                                <span class="flex-1">Beef Caldereta</span>
-                                                <span class="text-[#E75925] font-medium">+₱75</span>
-                                            </label>
-                                            <label class="flex items-center hover:bg-gray-50 p-2 rounded transition-colors">
-                                                <input type="checkbox" name="menu_main[]" value="sweet_sour_fish" data-price="60" class="mr-3 text-[#E75925] w-4 h-4">
-                                                <span class="flex-1">Sweet & Sour Fish</span>
-                                                <span class="text-[#E75925] font-medium">+₱60</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    
-                                    <div>
-                                        <div class="font-semibold text-[#E75925] mb-3 text-base border-b pb-2">Side Dishes</div>
-                                        <div class="space-y-2">
-                                            <label class="flex items-center hover:bg-gray-50 p-2 rounded transition-colors">
-                                                <input type="checkbox" name="menu_side[]" value="pancit_canton" data-price="25" class="mr-3 text-[#E75925] w-4 h-4">
-                                                <span class="flex-1">Pancit Canton</span>
-                                                <span class="text-[#E75925] font-medium">+₱25</span>
-                                            </label>
-                                            <label class="flex items-center hover:bg-gray-50 p-2 rounded transition-colors">
-                                                <input type="checkbox" name="menu_side[]" value="fried_rice" data-price="20" class="mr-3 text-[#E75925] w-4 h-4">
-                                                <span class="flex-1">Fried Rice</span>
-                                                <span class="text-[#E75925] font-medium">+₱20</span>
-                                            </label>
-                                            <label class="flex items-center hover:bg-gray-50 p-2 rounded transition-colors">
-                                                <input type="checkbox" name="menu_side[]" value="lumpiang_shanghai" data-price="35" class="mr-3 text-[#E75925] w-4 h-4">
-                                                <span class="flex-1">Lumpiang Shanghai</span>
-                                                <span class="text-[#E75925] font-medium">+₱35</span>
-                                            </label>
-                                            <label class="flex items-center hover:bg-gray-50 p-2 rounded transition-colors">
-                                                <input type="checkbox" name="menu_side[]" value="mixed_vegetables" data-price="15" class="mr-3 text-[#E75925] w-4 h-4">
-                                                <span class="flex-1">Mixed Vegetables</span>
-                                                <span class="text-[#E75925] font-medium">+₱15</span>
-                                            </label>
-                                        </div>
-                                    </div>
+                            <select id="package" name="food_package" 
+                                class="form-input w-full border-2 border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#E75925] focus:border-[#E75925] text-black" required>
+                                <option value="">Select a package</option>
+                                <option value="budget" data-price="200">Budget Package - ₱200/person</option>
+                                <option value="standard" data-price="350">Standard Package - ₱350/person</option>
+                                <option value="premium" data-price="500">Premium Package - ₱500/person</option>
+                                <option value="deluxe" data-price="750">Deluxe Package - ₱750/person</option>
+                                <option value="luxury" data-price="1000">Luxury Package - ₱1000/person</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block font-semibold mb-1 text-gray-700">
+                                <i class="fas fa-calendar-day mr-2 text-[#E75925]"></i>
+                                Type of Event *
+                            </label>
+                            <select id="eventtype" name="event_type" 
+                                class="form-input w-full border-2 border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#E75925] focus:border-[#E75925] text-black" required>
+                                <option value="">Select event type</option>
+                                <option value="birthday">Birthday Party</option>
+                                <option value="wedding">Wedding Reception</option>
+                                <option value="corporate">Corporate Event</option>
+                                <option value="graduation">Graduation Party</option>
+                                <option value="anniversary">Anniversary</option>
+                                <option value="debut">Debut/18th Birthday</option>
+                                <option value="baptismal">Baptismal</option>
+                                <option value="funeral">Funeral Service</option>
+                                <option value="others">Others</option>
+                            </select>
+                        </div>
+                    </div>
 
-                                    <div>
-                                        <div class="font-semibold text-[#E75925] mb-3 text-base border-b pb-2">Desserts</div>
-                                        <div class="space-y-2">
-                                            <label class="flex items-center hover:bg-gray-50 p-2 rounded transition-colors">
-                                                <input type="checkbox" name="menu_dessert[]" value="leche_flan" data-price="40" class="mr-3 text-[#E75925] w-4 h-4">
-                                                <span class="flex-1">Leche Flan</span>
-                                                <span class="text-[#E75925] font-medium">+₱40</span>
-                                            </label>
-                                            <label class="flex items-center hover:bg-gray-50 p-2 rounded transition-colors">
-                                                <input type="checkbox" name="menu_dessert[]" value="halo_halo" data-price="45" class="mr-3 text-[#E75925] w-4 h-4">
-                                                <span class="flex-1">Halo-Halo</span>
-                                                <span class="text-[#E75925] font-medium">+₱45</span>
-                                            </label>
-                                            <label class="flex items-center hover:bg-gray-50 p-2 rounded transition-colors">
-                                                <input type="checkbox" name="menu_dessert[]" value="buko_pie" data-price="55" class="mr-3 text-[#E75925] w-4 h-4">
-                                                <span class="flex-1">Buko Pie</span>
-                                                <span class="text-[#E75925] font-medium">+₱55</span>
-                                            </label>
-                                            <label class="flex items-center hover:bg-gray-50 p-2 rounded transition-colors">
-                                                <input type="checkbox" name="menu_dessert[]" value="ice_cream" data-price="30" class="mr-3 text-[#E75925] w-4 h-4">
-                                                <span class="flex-1">Ice Cream</span>
-                                                <span class="text-[#E75925] font-medium">+₱30</span>
-                                            </label>
-                                        </div>
+                    <!-- Birthday Age Field -->
+                    <div id="age-field" class="hidden">
+                        <label class="block font-semibold mb-1 text-gray-700">
+                            <i class="fas fa-birthday-cake mr-2 text-[#E75925]"></i>
+                            Celebrant's Age *
+                        </label>
+                        <input id="celebrant-age" name="celebrant_age" type="number" min="1" max="150"
+                            class="form-input w-full md:w-32 border-2 border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#E75925] focus:border-[#E75925] text-black" 
+                            placeholder="Age">
+                    </div>
+                    
+                    <!-- Integrated Price Calculator -->
+                    <div id="price-summary" class="bg-gradient-to-r from-[#E75925] to-[#d14b1f] text-white p-4 rounded-lg shadow-lg">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <div class="text-sm opacity-90 mb-1">
+                                    <i class="fas fa-calculator mr-1"></i>
+                                    Estimated Cost
+                                </div>
+                                <div class="space-y-1">
+                                    <div class="flex justify-between text-sm">
+                                        <span>Base Package:</span>
+                                        <span id="base-price">₱0.00</span>
+                                    </div>
+                                    <div class="flex justify-between text-sm" id="additional-items-container" style="display: none;">
+                                        <span>Additional Items:</span>
+                                        <span id="additional-price">₱0.00</span>
                                     </div>
                                 </div>
-                                <p class="text-xs text-gray-500 mt-3">* Additional menu prices are per person and will be added to your base package cost.</p>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-2xl font-bold" id="total-display">₱0.00</div>
+                                <div class="text-xs opacity-90">
+                                    for <span id="guest-display">0</span>
+                                </div>
                             </div>
                         </div>
-
-                        <div class="flex justify-between">
-                            <button type="button" id="back-step3" 
-                                class="bg-gray-300 text-gray-700 px-6 py-3 rounded-lg shadow-md hover:bg-gray-400 transition-colors font-semibold">
-                                <i class="fas fa-arrow-left mr-2"></i>Back
-                            </button>
-                            <button type="submit" id="submit-booking" 
-                                class="text-white px-8 py-3 rounded-lg shadow-md hover:opacity-90 transition-all transform hover:scale-105 font-semibold text-lg" 
-                                style="background-color:#E75925;">
-                                <i class="fas fa-paper-plane mr-2"></i>Submit Booking
-                            </button>
-                        </div>
                     </div>
-                </div>
-            </form>
-        </div>
-
-        <!-- ENHANCED PRICE CALCULATOR SIDEBAR -->
-        <div class="lg:col-span-1">
-            <div class="price-calculator p-6 sticky top-6">
-                <div class="flex items-center gap-3 mb-6">
-                    <i class="fas fa-calculator text-2xl"></i>
-                    <h3 class="text-xl font-bold">Price Calculator</h3>
-                </div>
-                
-                <div class="price-breakdown p-4 mb-4">
-                    <div class="space-y-2" id="price-breakdown-details">
-                        <div class="price-item flex justify-between">
-                            <span>Base Package:</span>
-                            <span id="base-price">₱0.00</span>
-                        </div>
-                        <div class="price-item flex justify-between" id="additional-items-container" style="display: none;">
-                            <span>Additional Items:</span>
-                            <span id="additional-price">₱0.00</span>
-                        </div>
-                        <div class="price-item flex justify-between">
-                            <span class="text-lg">Total Cost:</span>
-                            <span id="total-display" class="text-xl font-bold">₱0.00</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="text-center">
-                    <div class="text-sm opacity-90 mb-2">Estimated for</div>
-                    <div id="guest-display" class="text-lg font-semibold">0 guests</div>
-                </div>
-                
-                <div class="mt-4 p-3 bg-white bg-opacity-20 rounded-lg">
-                    <div class="text-xs text-center opacity-90">
-                        <i class="fas fa-info-circle mr-1"></i>
-                        Final price may vary based on specific requirements and location
+                    
+                    <div class="flex justify-end">
+                        <button type="button" id="next-step1" 
+                            class="text-white px-8 py-3 rounded-lg shadow-md hover:opacity-90 transition-all transform hover:scale-105 font-semibold" 
+                            style="background-color:#E75925;">
+                            Next Step <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
                     </div>
                 </div>
             </div>
-        </div>
+
+            <!-- Step 2: Event Details -->
+            <div id="booking-step2" class="form-step bg-white p-6 rounded-lg shadow-lg border-2 border-gray-300 hidden">
+                <h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                    <i class="fas fa-calendar-alt text-[#E75925]"></i>
+                    Event Schedule & Details
+                </h3>
+                <div class="space-y-6">
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block font-semibold mb-1 text-gray-700">
+                                <i class="fas fa-calendar mr-2 text-[#E75925]"></i>
+                                Event Date *
+                            </label>
+                            <input id="event-date" name="event_date" type="date" 
+                                class="form-input w-full border-2 border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#E75925] focus:border-[#E75925] text-black" required>
+                            <p class="text-xs text-gray-500 mt-1">Must be at least 3 days from today</p>
+                        </div>
+                        <div>
+                            <label class="block font-semibold mb-1 text-gray-700">
+                                <i class="fas fa-clock mr-2 text-[#E75925]"></i>
+                                Start Time *
+                            </label>
+                            <input id="start-time" name="start_time" type="time" 
+                                class="form-input w-full border-2 border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#E75925] focus:border-[#E75925] text-black" required>
+                        </div>
+                        <div>
+                            <label class="block font-semibold mb-1 text-gray-700">
+                                <i class="fas fa-clock mr-2 text-[#E75925]"></i>
+                                End Time *
+                            </label>
+                            <input id="end-time" name="end_time" type="time" 
+                                class="form-input w-full border-2 border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#E75925] focus:border-[#E75925] text-black" required>
+                            <p class="text-xs text-gray-500 mt-1">Duration: 4-8 hours</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Location Input -->
+                    <div>
+                        <label for="location" class="block font-semibold mb-1 text-gray-700">
+                            <i class="fas fa-map-marker-alt mr-2 text-[#E75925]"></i>
+                            Event Location *
+                        </label>
+                        <input type="text" id="location" name="location" required
+                            placeholder="Enter full event address (e.g., 123 Main St, City)"
+                            class="form-input w-full border-2 border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#E75925] focus:border-[#E75925] text-black" />
+                        <p class="text-xs text-gray-500 mt-1">Provide the exact address of the event location.</p>
+                    </div>
+                    
+                    <!-- Time Conflict Warning -->
+                    <div id="time-conflict-warning" class="hidden bg-red-50 border border-red-200 rounded-lg p-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>
+                            <span class="text-red-700 font-semibold">Time Conflict Detected</span>
+                        </div>
+                        <p class="text-red-600 mt-1 text-sm" id="conflict-details"></p>
+                    </div>
+
+                    <!-- Event Summary Preview -->
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-blue-800 mb-2 flex items-center gap-2">
+                            <i class="fas fa-eye"></i>
+                            Event Preview
+                        </h4>
+                        <div id="event-preview" class="text-sm text-blue-700">
+                            <p>Fill in the details above to see your event preview</p>
+                        </div>
+                    </div>
+
+                    <!-- Price Summary for Step 2 -->
+                    <div id="price-summary-step2" class="bg-white border-2 border-gray-300 text-gray-800 p-4 rounded-lg shadow-lg">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <div class="text-sm text-gray-600 mb-1">
+                                    <i class="fas fa-calculator mr-1 text-[#E75925]"></i>
+                                    Current Estimate
+                                </div>
+                                <div class="space-y-1">
+                                    <div class="flex justify-between text-sm">
+                                        <span>Base Package:</span>
+                                        <span id="base-price-step2">₱0.00</span>
+                                    </div>
+                                    <div class="flex justify-between text-sm" id="additional-items-container-step2" style="display: none;">
+                                        <span>Additional Items:</span>
+                                        <span id="additional-price-step2">₱0.00</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-2xl font-bold text-[#E75925]" id="total-display-step2">₱0.00</div>
+                                <div class="text-xs text-gray-600">
+                                    for <span id="guest-display-step2">0</span> guests
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between">
+                        <button type="button" id="back-step2" 
+                            class="bg-gray-300 text-gray-700 px-6 py-3 rounded-lg shadow-md hover:bg-gray-400 transition-colors font-semibold">
+                            <i class="fas fa-arrow-left mr-2"></i>Back
+                        </button>
+                        <button type="button" id="next-step2" 
+                            class="text-white px-8 py-3 rounded-lg shadow-md hover:opacity-90 transition-all transform hover:scale-105 font-semibold" 
+                            style="background-color:#E75925;">
+                            Next Step <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Theme & Menu Selection -->
+            <div id="booking-step3" class="form-step bg-white p-6 rounded-lg shadow-lg border-2 border-gray-300 hidden">
+                <h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                    <i class="fas fa-palette text-[#E75925]"></i>
+                    Theme & Menu Customization
+                </h3>
+                <div class="space-y-6">
+                    <!-- Theme Selection -->
+                    <div>
+                        <label class="block font-semibold mb-3 text-gray-700">
+                            <i class="fas fa-paint-brush mr-2 text-[#E75925]"></i>
+                            Choose Your Event Theme
+                        </label>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-3">
+                            <button type="button" class="theme-btn p-4 border-2 border-gray-300 rounded-lg hover:border-[#E75925] focus:border-[#E75925] transition-all" data-theme="elegant">
+                                <i class="fas fa-crown text-3xl mb-2" style="color:#E75925;"></i>
+                                <div class="font-semibold text-sm">Elegant</div>
+                                <div class="text-xs text-gray-500">Classic & Sophisticated</div>
+                                <input type="radio" name="event_theme" value="elegant" class="hidden">
+                            </button>
+                            <button type="button" class="theme-btn p-4 border-2 border-gray-300 rounded-lg hover:border-[#E75925] focus:border-[#E75925] transition-all" data-theme="rustic">
+                                <i class="fas fa-leaf text-3xl mb-2" style="color:#E75925;"></i>
+                                <div class="font-semibold text-sm">Rustic</div>
+                                <div class="text-xs text-gray-500">Natural & Cozy</div>
+                                <input type="radio" name="event_theme" value="rustic" class="hidden">
+                            </button>
+                            <button type="button" class="theme-btn p-4 border-2 border-gray-300 rounded-lg hover:border-[#E75925] focus:border-[#E75925] transition-all" data-theme="modern">
+                                <i class="fas fa-star text-3xl mb-2" style="color:#E75925;"></i>
+                                <div class="font-semibold text-sm">Modern</div>
+                                <div class="text-xs text-gray-500">Clean & Minimalist</div>
+                                <input type="radio" name="event_theme" value="modern" class="hidden">
+                            </button>
+                            <button type="button" class="theme-btn p-4 border-2 border-gray-300 rounded-lg hover:border-[#E75925] focus:border-[#E75925] transition-all" data-theme="tropical">
+                                <i class="fas fa-umbrella-beach text-3xl mb-2" style="color:#E75925;"></i>
+                                <div class="font-semibold text-sm">Tropical</div>
+                                <div class="text-xs text-gray-500">Bright & Colorful</div>
+                                <input type="radio" name="event_theme" value="tropical" class="hidden">
+                            </button>
+                            <button type="button" class="theme-btn p-4 border-2 border-gray-300 rounded-lg hover:border-[#E75925] focus:border-[#E75925] transition-all" data-theme="vintage">
+                                <i class="fas fa-camera-retro text-3xl mb-2" style="color:#E75925;"></i>
+                                <div class="font-semibold text-sm">Vintage</div>
+                                <div class="text-xs text-gray-500">Retro & Classic</div>
+                                <input type="radio" name="event_theme" value="vintage" class="hidden">
+                            </button>
+                            <button type="button" class="theme-btn p-4 border-2 border-gray-300 rounded-lg hover:border-[#E75925] focus:border-[#E75925] transition-all" data-theme="custom">
+                                <i class="fas fa-pencil-alt text-3xl mb-2" style="color:#E75925;"></i>
+                                <div class="font-semibold text-sm">Custom</div>
+                                <div class="text-xs text-gray-500">Your Own Style</div>
+                                <input type="radio" name="event_theme" value="custom" class="hidden">
+                            </button>
+                        </div>
+                        
+                        <input id="custom-theme" name="custom_theme" type="text" 
+                            class="w-full border-2 border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#E75925] focus:border-[#E75925] text-black hidden mb-3" 
+                            placeholder="Describe your custom theme">
+                    </div>
+
+                    <!-- Theme Suggestions -->
+                    <div>
+                        <label class="block font-semibold mb-2 text-gray-700">
+                            <i class="fas fa-lightbulb mr-2 text-[#E75925]"></i>
+                            Additional Theme Suggestions or Special Requests
+                        </label>
+                        <textarea id="theme-suggestions" name="theme_suggestions" rows="3"
+                            class="form-input w-full border-2 border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#E75925] focus:border-[#E75925] text-black"
+                            placeholder="Tell us about any specific decorations, colors, or special touches..."></textarea>
+                    </div>
+
+                    <!-- Menu Selection with Pricing -->
+                    <div>
+                        <label class="block font-semibold mb-3 text-gray-700">
+                            <i class="fas fa-utensils mr-2 text-[#E75925]"></i>
+                            Additional Menu Items (Optional)
+                        </label>
+                        <div class="border-2 border-gray-300 rounded-lg p-4">
+                            <p class="text-sm text-gray-600 mb-4">Add extra items to your package for additional cost:</p>
+                            <div class="grid md:grid-cols-3 gap-6 text-sm">
+                                <div>
+                                    <div class="font-semibold text-[#E75925] mb-3 text-base border-b pb-2">Main Dishes</div>
+                                    <div class="space-y-2">
+                                        <label class="flex items-center hover:bg-gray-50 p-2 rounded transition-colors">
+                                            <input type="checkbox" name="menu_main[]" value="lechon_kawali" data-price="50" class="mr-3 text-[#E75925] w-4 h-4">
+                                            <span class="flex-1">Lechon Kawali</span>
+                                            <span class="text-[#E75925] font-medium">+₱50</span>
+                                        </label>
+                                        <label class="flex items-center hover:bg-gray-50 p-2 rounded transition-colors">
+                                            <input type="checkbox" name="menu_main[]" value="chicken_adobo" data-price="30" class="mr-3 text-[#E75925] w-4 h-4">
+                                            <span class="flex-1">Chicken Adobo</span>
+                                            <span class="text-[#E75925] font-medium">+₱30</span>
+                                        </label>
+                                        <label class="flex items-center hover:bg-gray-50 p-2 rounded transition-colors">
+                                            <input type="checkbox" name="menu_main[]" value="beef_caldereta" data-price="75" class="mr-3 text-[#E75925] w-4 h-4">
+                                            <span class="flex-1">Beef Caldereta</span>
+                                            <span class="text-[#E75925] font-medium">+₱75</span>
+                                        </label>
+                                        <label class="flex items-center hover:bg-gray-50 p-2 rounded transition-colors">
+                                            <input type="checkbox" name="menu_main[]" value="sweet_sour_fish" data-price="60" class="mr-3 text-[#E75925] w-4 h-4">
+                                            <span class="flex-1">Sweet & Sour Fish</span>
+                                            <span class="text-[#E75925] font-medium">+₱60</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <div class="font-semibold text-[#E75925] mb-3 text-base border-b pb-2">Side Dishes</div>
+                                    <div class="space-y-2">
+                                        <label class="flex items-center hover:bg-gray-50 p-2 rounded transition-colors">
+                                            <input type="checkbox" name="menu_side[]" value="pancit_canton" data-price="25" class="mr-3 text-[#E75925] w-4 h-4">
+                                            <span class="flex-1">Pancit Canton</span>
+                                            <span class="text-[#E75925] font-medium">+₱25</span>
+                                        </label>
+                                        <label class="flex items-center hover:bg-gray-50 p-2 rounded transition-colors">
+                                            <input type="checkbox" name="menu_side[]" value="fried_rice" data-price="20" class="mr-3 text-[#E75925] w-4 h-4">
+                                            <span class="flex-1">Fried Rice</span>
+                                            <span class="text-[#E75925] font-medium">+₱20</span>
+                                        </label>
+                                        <label class="flex items-center hover:bg-gray-50 p-2 rounded transition-colors">
+                                            <input type="checkbox" name="menu_side[]" value="lumpiang_shanghai" data-price="35" class="mr-3 text-[#E75925] w-4 h-4">
+                                            <span class="flex-1">Lumpiang Shanghai</span>
+                                            <span class="text-[#E75925] font-medium">+₱35</span>
+                                        </label>
+                                        <label class="flex items-center hover:bg-gray-50 p-2 rounded transition-colors">
+                                            <input type="checkbox" name="menu_side[]" value="mixed_vegetables" data-price="15" class="mr-3 text-[#E75925] w-4 h-4">
+                                            <span class="flex-1">Mixed Vegetables</span>
+                                            <span class="text-[#E75925] font-medium">+₱15</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div class="font-semibold text-[#E75925] mb-3 text-base border-b pb-2">Desserts</div>
+                                    <div class="space-y-2">
+                                        <label class="flex items-center hover:bg-gray-50 p-2 rounded transition-colors">
+                                            <input type="checkbox" name="menu_dessert[]" value="leche_flan" data-price="40" class="mr-3 text-[#E75925] w-4 h-4">
+                                            <span class="flex-1">Leche Flan</span>
+                                            <span class="text-[#E75925] font-medium">+₱40</span>
+                                        </label>
+                                        <label class="flex items-center hover:bg-gray-50 p-2 rounded transition-colors">
+                                            <input type="checkbox" name="menu_dessert[]" value="halo_halo" data-price="45" class="mr-3 text-[#E75925] w-4 h-4">
+                                            <span class="flex-1">Halo-Halo</span>
+                                            <span class="text-[#E75925] font-medium">+₱45</span>
+                                        </label>
+                                        <label class="flex items-center hover:bg-gray-50 p-2 rounded transition-colors">
+                                            <input type="checkbox" name="menu_dessert[]" value="buko_pie" data-price="55" class="mr-3 text-[#E75925] w-4 h-4">
+                                            <span class="flex-1">Buko Pie</span>
+                                            <span class="text-[#E75925] font-medium">+₱55</span>
+                                        </label>
+                                        <label class="flex items-center hover:bg-gray-50 p-2 rounded transition-colors">
+                                            <input type="checkbox" name="menu_dessert[]" value="ice_cream" data-price="30" class="mr-3 text-[#E75925] w-4 h-4">
+                                            <span class="flex-1">Ice Cream</span>
+                                            <span class="text-[#E75925] font-medium">+₱30</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-3">* Additional menu prices are per person and will be added to your base package cost.</p>
+                        </div>
+                    </div>
+
+                    <!-- Final Price Summary for Step 3 -->
+                    <div id="price-summary-step3" class="bg-white border-2 border-gray-300 text-gray-800 p-4 rounded-lg shadow-lg">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <div class="text-sm text-gray-600 mb-1">
+                                    <i class="fas fa-calculator mr-1 text-[#E75925]"></i>
+                                    Final Estimate
+                                </div>
+                                <div class="space-y-1">
+                                    <div class="flex justify-between text-sm">
+                                        <span>Base Package:</span>
+                                        <span id="base-price-step3">₱0.00</span>
+                                    </div>
+                                    <div class="flex justify-between text-sm" id="additional-items-container-step3" style="display: none;">
+                                        <span>Additional Items:</span>
+                                        <span id="additional-price-step3">₱0.00</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-2xl font-bold text-gray-800" id="total-display-step3">₱0.00</div>
+                                <div class="text-xs text-gray-600">
+                                    for <span id="guest-display-step3">0</span> guests
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-2 pt-2 border-t border-gray-300">
+                            <div class="text-xs text-center text-gray-600">
+                                <i class="fas fa-info-circle mr-1 text-gray-600"></i>
+                                Final price may vary based on specific requirements and location
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between">
+                        <button type="button" id="back-step3" 
+                            class="bg-gray-300 text-gray-700 px-6 py-3 rounded-lg shadow-md hover:bg-gray-400 transition-colors font-semibold">
+                            <i class="fas fa-arrow-left mr-2"></i>Back
+                        </button>
+                        <button type="submit" id="submit-booking" 
+                            class="text-white px-8 py-3 rounded-lg shadow-md hover:opacity-90 transition-all transform hover:scale-105 font-semibold text-lg" 
+                            style="background-color:#E75925;">
+                            <i class="fas fa-paper-plane mr-2"></i>Submit Booking
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 </section>
 
@@ -1680,7 +1746,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'get_booking_stats') {
 
 <!-- JavaScript -->
 <script>
-// Enhanced Price Calculator Functions
+// Enhanced Price Calculator Functions with Multi-Step Sync
 const PACKAGE_PRICES = {
     budget: 200,
     standard: 350,
@@ -1701,8 +1767,8 @@ function updatePriceCalculator() {
     const packageSelect = document.getElementById('package');
     const packageType = packageSelect?.value || '';
     
-    // Update guest display
-    document.getElementById('guest-display').textContent = `${guestCount} guests`;
+    // Update all guest displays across all steps
+    updateGuestDisplays(guestCount);
     
     if (!packageType || !guestCount) {
         resetPriceDisplay();
@@ -1723,39 +1789,188 @@ function updatePriceCalculator() {
     });
     currentPriceData.additionalPrice = additionalPrice;
     
-    // Update display
-    document.getElementById('base-price').textContent = `₱${basePrice.toLocaleString()}.00`;
-    
-    const additionalContainer = document.getElementById('additional-items-container');
-    if (additionalPrice > 0) {
-        additionalContainer.style.display = 'flex';
-        document.getElementById('additional-price').textContent = `₱${additionalPrice.toLocaleString()}.00`;
-    } else {
-        additionalContainer.style.display = 'none';
-    }
-    
-    const totalPrice = basePrice + additionalPrice;
-    document.getElementById('total-display').textContent = `₱${totalPrice.toLocaleString()}.00`;
+    // Update all price displays across all steps
+    updateAllPriceDisplays(basePrice, additionalPrice, guestCount);
     
     // Update hidden input for form submission
+    const totalPrice = basePrice + additionalPrice;
     document.getElementById('total_price').value = totalPrice;
     
-    // Add animation
-    document.getElementById('total-display').classList.add('calculating');
-    setTimeout(() => {
-        document.getElementById('total-display').classList.remove('calculating');
-    }, 1000);
+    // Add animation to all total displays
+    animatePriceUpdate();
+}
+
+function updateGuestDisplays(guestCount) {
+    const guestTexts = [`${guestCount} guests`, `${guestCount} guests`, `${guestCount} guests`];
+    
+    document.getElementById('guest-display').textContent = guestTexts[0];
+    
+    const step2Display = document.getElementById('guest-display-step2');
+    if (step2Display) step2Display.textContent = guestTexts[1];
+    
+    const step3Display = document.getElementById('guest-display-step3');
+    if (step3Display) step3Display.textContent = guestTexts[2];
+}
+
+function updateAllPriceDisplays(basePrice, additionalPrice, guestCount) {
+    const totalPrice = basePrice + additionalPrice;
+    const formattedBase = `₱${basePrice.toLocaleString()}.00`;
+    const formattedAdditional = `₱${additionalPrice.toLocaleString()}.00`;
+    const formattedTotal = `₱${totalPrice.toLocaleString()}.00`;
+    
+    // Step 1 displays
+    document.getElementById('base-price').textContent = formattedBase;
+    const additionalContainer1 = document.getElementById('additional-items-container');
+    if (additionalPrice > 0) {
+        additionalContainer1.style.display = 'flex';
+        document.getElementById('additional-price').textContent = formattedAdditional;
+    } else {
+        additionalContainer1.style.display = 'none';
+    }
+    document.getElementById('total-display').textContent = formattedTotal;
+    
+    // Step 2 displays
+    const basePriceStep2 = document.getElementById('base-price-step2');
+    if (basePriceStep2) basePriceStep2.textContent = formattedBase;
+    
+    const additionalContainer2 = document.getElementById('additional-items-container-step2');
+    if (additionalContainer2) {
+        if (additionalPrice > 0) {
+            additionalContainer2.style.display = 'flex';
+            const additionalPriceStep2 = document.getElementById('additional-price-step2');
+            if (additionalPriceStep2) additionalPriceStep2.textContent = formattedAdditional;
+        } else {
+            additionalContainer2.style.display = 'none';
+        }
+    }
+    
+    const totalDisplayStep2 = document.getElementById('total-display-step2');
+    if (totalDisplayStep2) totalDisplayStep2.textContent = formattedTotal;
+    
+    // Step 3 displays
+    const basePriceStep3 = document.getElementById('base-price-step3');
+    if (basePriceStep3) basePriceStep3.textContent = formattedBase;
+    
+    const additionalContainer3 = document.getElementById('additional-items-container-step3');
+    if (additionalContainer3) {
+        if (additionalPrice > 0) {
+            additionalContainer3.style.display = 'flex';
+            const additionalPriceStep3 = document.getElementById('additional-price-step3');
+            if (additionalPriceStep3) additionalPriceStep3.textContent = formattedAdditional;
+        } else {
+            additionalContainer3.style.display = 'none';
+        }
+    }
+    
+    const totalDisplayStep3 = document.getElementById('total-display-step3');
+    if (totalDisplayStep3) totalDisplayStep3.textContent = formattedTotal;
+}
+
+function animatePriceUpdate() {
+    // Add animation class to all total displays
+    const totalDisplays = [
+        'total-display',
+        'total-display-step2', 
+        'total-display-step3'
+    ];
+    
+    totalDisplays.forEach(displayId => {
+        const element = document.getElementById(displayId);
+        if (element) {
+            element.classList.add('calculating');
+            setTimeout(() => {
+                element.classList.remove('calculating');
+            }, 1000);
+        }
+    });
 }
 
 function resetPriceDisplay() {
-    document.getElementById('base-price').textContent = '₱0.00';
-    document.getElementById('additional-price').textContent = '₱0.00';
-    document.getElementById('total-display').textContent = '₱0.00';
-    document.getElementById('guest-display').textContent = '0 guests';
-    document.getElementById('additional-items-container').style.display = 'none';
-    document.getElementById('total_price').value = '0';
+    const priceElements = [
+        { id: 'base-price', value: '₱0.00' },
+        { id: 'base-price-step2', value: '₱0.00' },
+        { id: 'base-price-step3', value: '₱0.00' },
+        { id: 'additional-price', value: '₱0.00' },
+        { id: 'additional-price-step2', value: '₱0.00' },
+        { id: 'additional-price-step3', value: '₱0.00' },
+        { id: 'total-display', value: '₱0.00' },
+        { id: 'total-display-step2', value: '₱0.00' },
+        { id: 'total-display-step3', value: '₱0.00' },
+        { id: 'guest-display', value: '0 guests' },
+        { id: 'guest-display-step2', value: '0 guests' },
+        { id: 'guest-display-step3', value: '0 guests' }
+    ];
     
+    priceElements.forEach(({ id, value }) => {
+        const element = document.getElementById(id);
+        if (element) element.textContent = value;
+    });
+    
+    // Hide additional items containers
+    const additionalContainers = [
+        'additional-items-container',
+        'additional-items-container-step2',
+        'additional-items-container-step3'
+    ];
+    
+    additionalContainers.forEach(containerId => {
+        const container = document.getElementById(containerId);
+        if (container) container.style.display = 'none';
+    });
+    
+    document.getElementById('total_price').value = '0';
     currentPriceData = { basePrice: 0, additionalPrice: 0, guestCount: 0, packageType: '' };
+}
+
+// Enhanced step navigation with price sync
+function goToStep(stepNumber) {
+    // Hide all steps
+    document.querySelectorAll('.form-step').forEach(step => {
+        step.classList.add('hidden');
+        step.classList.remove('active');
+    });
+    
+    // Show target step
+    const targetStep = document.getElementById(`booking-step${stepNumber}`);
+    if (targetStep) {
+        targetStep.classList.remove('hidden');
+        targetStep.classList.add('active');
+    }
+    
+    // Update progress indicators
+    updateStepProgress(stepNumber);
+    
+    // Sync price displays when navigating
+    updatePriceCalculator();
+    
+    // Scroll to top of form
+    document.getElementById('section-book').scrollIntoView({ behavior: 'smooth' });
+}
+
+function updateStepProgress(activeStep) {
+    for (let i = 1; i <= 3; i++) {
+        const stepItem = document.getElementById(`step-${i}`);
+        const stepLine = stepItem.nextElementSibling;
+        
+        if (i < activeStep) {
+            stepItem.classList.add('completed');
+            stepItem.classList.remove('active', 'inactive');
+            if (stepLine && stepLine.classList.contains('step-line')) {
+                stepLine.classList.add('completed');
+                stepLine.classList.remove('inactive');
+            }
+        } else if (i === activeStep) {
+            stepItem.classList.add('active');
+            stepItem.classList.remove('completed', 'inactive');
+        } else {
+            stepItem.classList.add('inactive');
+            stepItem.classList.remove('active', 'completed');
+            if (stepLine && stepLine.classList.contains('step-line')) {
+                stepLine.classList.add('inactive');
+                stepLine.classList.remove('completed');
+            }
+        }
+    }
 }
 
 // Enhanced Booking Card Generation with Price Display
@@ -2074,6 +2289,35 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
+    // Enhanced step navigation listeners
+    const nextStep1 = document.getElementById('next-step1');
+    if (nextStep1) {
+        nextStep1.addEventListener('click', function() {
+            goToStep(2);
+        });
+    }
+    
+    const nextStep2 = document.getElementById('next-step2');
+    if (nextStep2) {
+        nextStep2.addEventListener('click', function() {
+            goToStep(3);
+        });
+    }
+    
+    const backStep2 = document.getElementById('back-step2');
+    if (backStep2) {
+        backStep2.addEventListener('click', function() {
+            goToStep(1);
+        });
+    }
+    
+    const backStep3 = document.getElementById('back-step3');
+    if (backStep3) {
+        backStep3.addEventListener('click', function() {
+            goToStep(2);
+        });
+    }
+    
     // FIXED: Enhanced form submission with success navigation
     const bookingForm = document.querySelector('form[method="POST"]');
     if (bookingForm && !bookingForm.hasAttribute('data-event-attached')) {
@@ -2133,6 +2377,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Override the original displayBookings function
     window.displayBookings = displayBookingsWithPrice;
+    
+    // Make functions globally available
+    window.goToStep = goToStep;
+    window.updatePriceCalculator = updatePriceCalculator;
 });
 
 // FIXED: Create success modal function to prevent duplicate event listeners
